@@ -1,44 +1,58 @@
 import random
 import pygame
-import pygame as pg
+import math
 
 
-############# Colors for agents #############
+############# Colors for agents ##############
 Green = (0, 255, 0)
 Red = (255, 0, 0)
-dim = 20
-screen_w = 400
-screen_h = 400
+m_dim = 30
+p_dim = 20
+screen_w = 500
+screen_h = 500
 screen = pygame.display.set_mode((screen_w, screen_h))
 #############      END         ###############
 
 
 #########   Class for monster  ###############
 class DF_Monster():
-    def __init__(self, speed, x, y):
-        self.speed = speed
+    def __init__(self, x, y):
+        self.speed = 1
+        self.direction = ""
         self.x = x
         self.y = y
-        self.rect = pygame.Rect( self.x, self.y, dim, dim )
-
+        self.image = pygame.image.load("monster.png").convert()
+        self.rect = pygame.Rect( self.x, self.y, m_dim, m_dim )
+        self.scaledMonster = pygame.transform.scale(self.image, (int(m_dim), int(m_dim)))
 
 
 
     # Draw the monster to the screen.
-    def draw(self, screen, color):
-        pygame.draw.rect( screen, Green, self.rect )
+    def draw(self):
+        screen.blit(self.scaledMonster, self.rect)
+        #pygame.draw.rect( screen, Green, self.rect )
 
-    def move(self, px, py, speed=5): # chase movement
+
+
+    def findPlayer(self, px, py): # chase movement
         # Movement along x direction
         if self.x > px:
-            self.x -= speed
-        elif self.x < px:
-            self.x += speed
+            self.direction = "left"
+            self.rect.move_ip( -self.speed, 0 )
+        if self.x < px:
+            self.direction = "right"
+            self.rect.move_ip( self.speed, 0 )
         # Movement along y direction
         if self.y < py:
-            self.y += speed
-        elif self.y > py:
-            self.y -= speed
+            self.direction = "down"
+            self.rect.move_ip( 0, self.speed )
+        if self.y > py:
+            self.direction = "up"
+            self.rect.move_ip( 0, -self.speed )
+
+    def getPos(self):
+        return ( self.rect.left, self.rect.top )
+
 
 
 
@@ -46,18 +60,36 @@ class DF_Monster():
 
 # Class for user who will control this agent.
 class User():
-    def __init__(self, speed, x, y):
-        self.speed = speed
+    def __init__(self, x, y):
+        self.speed = 1
+        self.direction = "wait"
         self.x = x
         self.y = y
-        self.rect = pygame.Rect( self.x, self.y, dim, dim )
+        self.image = pygame.image.load("dragon.png").convert()
+        self.rect = pygame.Rect( self.x, self.y, p_dim, p_dim )
+        #self.image.rect = self.rect
+        self.scaledPlayer = pygame.transform.scale(self.image, (int(p_dim * 1.3), int(p_dim * 1.3)))
 
-    def draw(self, screen, color):
-        pygame.draw.rect( screen, color, self.rect )
+    def draw(self):
+        #pygame.draw.rect( screen, color, self.rect )
+        screen.blit(self.scaledPlayer, self.rect)
 
-    def updatePos(self, x, y):
-        self.rect = self.rect.move(x, y)
-        self.draw(screen, Red)
 
     def getPos(self):
-        return [ self.x, self.y ]
+        return ( self.rect.left, self.rect.top )
+
+    def updateMove(self, keys):
+        if keys[pygame.K_UP]:
+            self.direction = "up"
+            self.rect.top -= self.speed
+        elif keys[pygame.K_DOWN]:
+            self.direction = "down"
+            self.rect.top += self.speed
+        elif keys[pygame.K_LEFT]:
+            self.direction = "left"
+            self.rect.left -= self.speed
+        elif keys[pygame.K_RIGHT]:
+            self.direction = "right"
+            self.rect.left += self.speed
+        else:
+            self.direction = "wait"
