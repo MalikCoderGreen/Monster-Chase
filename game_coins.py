@@ -20,12 +20,14 @@ class Coins():
         ### Use modulus to alternate the coins y-pos.
         for i in range(0, self.num):
 
-            if i % 2 == 0:
-                y = 380
-            else:
-                y = 10
 
-            x = random.randrange(random.randrange(10, 20), random.randrange(340, 380))
+            if i % 2 == 0:
+                y = random.randrange(370, 510)
+            else:
+                y = random.randrange(10, 50)
+
+            #y = random.randrange(random.randrange(5, 10), random.randrange(380, 400))
+            x = random.randrange(random.randrange(5, 10), random.randrange(380, 400))
             coin_pos = (x, y)
             self.o_list.append(pygame.Rect( coin_pos[0], coin_pos[1], 10, 10 ))
             self.o_list_rect.append(pygame.Rect( coin_pos[0], coin_pos[1], 10, 10 ))
@@ -34,7 +36,7 @@ class Coins():
             """ The commented code below was my attempt at getting the coins to spawn more
             randomly across the screen. Wish to figure this out in the future.
             Possible fix: test if coin.position colides with the walls in the wall list.
-            """ 
+            """
             #x = random.randrange(random.randrange(10, 20), random.randrange(340, 380))
             #y = random.randrange(random.randrange(10, 20), random.randrange(340, 380))
             """

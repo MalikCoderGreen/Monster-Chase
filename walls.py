@@ -11,12 +11,14 @@ class Interior_Walls():
         self.w_list = []
         self.num = num
         self.w_list_of_pos = []
+        self.image_horizontal = pygame.image.load("brick_texture.png").convert()
+        self.image_vertical = pygame.image.load("brick_texture_vertical.png").convert()
         wallDim1 = 100
-        wallDim2 = 10
+        wallDim2 = 21
         for i in range(0, self.num):
             dec = random.randrange(2, 20)
-            x = random.randrange(40, 300)
-            y = random.randrange(40, 300)
+            x = random.randrange(60, 290)
+            y = random.randrange(60, 290)
             if i % 2 == 0:
                 tmp = wallDim1
                 wallDim1 = wallDim2
@@ -26,7 +28,14 @@ class Interior_Walls():
 
     def draw_walls(self):
         for i in range(0, self.num):
-            pygame.draw.rect(screen, Blue, self.w_list[i])
+
+            if self.w_list[i][2] == 100: # Note.
+                #print("Horizontal wall!")
+                screen.blit(self.image_horizontal, self.w_list[i])
+            else:
+                #print("Vertical wall!")
+                screen.blit(self.image_vertical, self.w_list[i])
+            #pygame.draw.rect(screen, Blue, self.w_list[i])
 
 ### This function will detect if either the player or monster hits a wall ###
     def wall_collision(self, sq1, sq2, keys):

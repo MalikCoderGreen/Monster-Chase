@@ -6,8 +6,8 @@ import math
 ############# Colors for agents ##############
 Green = (0, 255, 0)
 Red = (255, 0, 0)
-m_dim = 30
-p_dim = 20
+m_dim = 40
+p_dim = 40
 screen_w = 500
 screen_h = 500
 screen = pygame.display.set_mode((screen_w, screen_h))
@@ -22,7 +22,7 @@ class DF_Monster():
         self.x = x
         self.y = y
         self.image = pygame.image.load("monster.png").convert()
-        self.rect = pygame.Rect( self.x, self.y, m_dim, m_dim )
+        self.rect = pygame.Rect( self.x, self.y, m_dim, m_dim  )
         self.scaledMonster = pygame.transform.scale(self.image, (int(m_dim), int(m_dim)))
 
 
@@ -66,19 +66,17 @@ class User():
         self.x = x
         self.y = y
         self.image = pygame.image.load("dragon.png").convert()
-        self.rect = pygame.Rect( self.x, self.y, p_dim, p_dim )
-        #self.image.rect = self.rect
-        self.scaledPlayer = pygame.transform.scale(self.image, (int(p_dim * 1.3), int(p_dim * 1.3)))
+        self.rect = pygame.Rect( self.x, self.y, p_dim, p_dim  )
+        self.scaledPlayer = pygame.transform.scale(self.image, (int(p_dim), int(p_dim)))
 
     def draw(self):
-        #pygame.draw.rect( screen, color, self.rect )
         screen.blit(self.scaledPlayer, self.rect)
 
 
-    def getPos(self):
+    def get_pos(self):
         return ( self.rect.left, self.rect.top )
 
-    def updateMove(self, keys):
+    def update_move(self, keys):
         if keys[pygame.K_UP]:
             self.direction = "up"
             self.rect.top -= self.speed
@@ -93,3 +91,10 @@ class User():
             self.rect.left += self.speed
         else:
             self.direction = "wait"
+
+    def detect_collision(self, mon, game_run):
+        if self.rect.colliderect(mon) or mon.rect.colliderect(self):
+            print("\nGame Over! The monster got you!... =(\n")
+            game_run = False
+            return game_run
+        return game_run
