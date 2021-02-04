@@ -1,0 +1,2 @@
+# Monster-Chase
+This is a game I created that simulates a user as a dragon and a monster A.I. agent that follows the player as they move on the screen. The user can control the direction of the dragon using the UP, DOWN, LEFT, and RIGHT directional keys. The way to win is to collect all of the coins on the screen before the monster gets you. Walls will randomly spawn onto the screen so you can use them as cover. 
