@@ -9,3 +9,4 @@ pygame 2.0.0
 
 
 # Screenshot
+![Alt text](https://github.com/MalikCoderGreen/HangMan/blob/master/hangMan.png?raw=true "Hang Man screenshot")
