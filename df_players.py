@@ -17,7 +17,7 @@ screen = pygame.display.set_mode((screen_w, screen_h))
 #########   Class for monster  ###############
 class DF_Monster():
     def __init__(self, x, y):
-        self.speed = 1
+        self.speed = 3
         self.direction = ""
         self.x = x
         self.y = y
@@ -30,8 +30,6 @@ class DF_Monster():
     # Draw the monster to the screen.
     def draw(self):
         screen.blit(self.scaledMonster, self.rect)
-        #pygame.draw.rect( screen, Green, self.rect )
-
 
 
     def findPlayer(self, px, py): # chase movement
@@ -61,7 +59,7 @@ class DF_Monster():
 # Class for user who will control this agent.
 class User():
     def __init__(self, x, y):
-        self.speed = 1
+        self.speed = 3
         self.direction = "wait"
         self.x = x
         self.y = y

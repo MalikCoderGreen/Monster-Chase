@@ -65,8 +65,8 @@ def keep_contained(walls, coins):
         o.clamp_ip(game_rect)
 
 ### Create coins and interior walls for game #################
-total_coins = 40
-num_of_walls = 25
+total_coins = 10
+num_of_walls = 5
 Walls = walls.Interior_Walls(num_of_walls)
 coins_for_game = game_coins.Coins(total_coins, Walls.w_list_of_pos) #Walls.w_list_of_pos
 ######################### END ################################
